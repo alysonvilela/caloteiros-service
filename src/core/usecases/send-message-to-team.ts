@@ -8,10 +8,6 @@ interface UsecaseResquest {
   charge_id: string;
 }
 
-interface UsecaseResponse {
-  status: 200 | 500;
-}
-
 export class SendMessageToTeamsUseCase {
   constructor(
     // private readonly queue: TeamRepository,
