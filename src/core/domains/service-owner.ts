@@ -2,11 +2,21 @@ import { BaseEntity } from "../../core/base/entity";
 import { Optional } from "../../utils/optional";
 
 interface IServiceOwner {
+  name: string;
+  phone: string;
   pix_key: string;
   created_at: string;
   updated_at: string | null;
 }
 export class ServiceOwner extends BaseEntity<IServiceOwner> {
+
+  get name() {
+    return this.props.name
+  }
+
+  get phone() {
+    return this.props.phone
+  }
 
   get pixKey() {
     return this.props.pix_key

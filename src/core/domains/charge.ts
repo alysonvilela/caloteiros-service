@@ -5,7 +5,7 @@ interface ICharge {
   owner_id: string
   service: {
     name: string
-    value: string
+    value: number
   }
   demand_day: string
   custom_message:string
