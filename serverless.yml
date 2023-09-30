@@ -1,0 +1,27 @@
+service: caloteiros-service
+frameworkVersion: '3'
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+
+custom:
+  useDotenv: true
+  serverless-offline:
+    httpPort: 4000
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+package:
+  individually: true
+
+functions:
+  send:
+    handler: handler.handler
+    events: 
+      - http:
+          path: send
+          method: post
+          
