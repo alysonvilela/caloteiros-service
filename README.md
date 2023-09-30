@@ -1,6 +1,6 @@
 ## Resumo
 Esse foi um projeto simples para cobrar os caloteiros que nao pagam assinaturas "familia".
-Usei para aprimorar tecnicas de DDD e SQL.
+Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 
 ## Techs
 - **WAHA + Venom -** Automacao whatsapp, expoe endpoints para envio de mensagens, autenticacao e afins.
