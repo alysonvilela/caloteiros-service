@@ -37,6 +37,9 @@ devDependencies:
   serverless-esbuild:
     specifier: ^1.25.0
     version: 1.48.4(esbuild@0.14.54)
+  serverless-offline-watcher:
+    specifier: ^1.1.0
+    version: 1.1.0
 
 packages:
 
@@ -3984,6 +3987,12 @@ packages:
       p-map: 4.0.0
       ramda: 0.28.0
       semver: 7.5.4
+    dev: true
+
+  /serverless-offline-watcher@1.1.0:
+    resolution: {integrity: sha512-ooPERKoi+v1CAqKENYOyyLX7+/oPLRP1ul3dfZ7Lz/icPeTZ8cg5MWTfOMLF18jUwdC/oJ0IbdjBd6sggFgdAQ==}
+    dependencies:
+      chokidar: 3.5.3
     dev: true
 
   /serverless-offline@13.1.1(serverless@3.35.2):

@@ -1,9 +1,13 @@
 {
+  "scripts": {
+    "dev": "serverless offline start"
+  },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.122",
     "@types/node": "^20.7.2",
     "esbuild": "^0.14.25",
-    "serverless-esbuild": "^1.25.0"
+    "serverless-esbuild": "^1.25.0",
+    "serverless-offline-watcher": "^1.1.0"
   },
   "dependencies": {
     "aws-lambda": "^1.0.7",

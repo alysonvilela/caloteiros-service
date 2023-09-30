@@ -4,11 +4,16 @@ frameworkVersion: '3'
 plugins:
   - serverless-esbuild
   - serverless-offline
+  - serverless-offline-watcher
 
 custom:
   useDotenv: true
   serverless-offline:
     httpPort: 4000
+  serverless-offline-watcher:
+    - path:
+        - src/**/*.ts
+      command: echo "Getted an update, refreshing..."
 
 provider:
   name: aws
@@ -19,7 +24,7 @@ package:
 
 functions:
   send:
-    handler: handler.handler
+    handler: src/functions/service-owner-controller.handler
     events: 
       - http:
           path: send
