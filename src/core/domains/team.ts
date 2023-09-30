@@ -2,7 +2,7 @@ import { BaseEntity } from "../../core/base/entity";
 import { Optional } from "../../utils/optional";
 import { Member } from "./members";
 
-interface ITeam {
+export interface ITeam {
   charge_id: string
   members: Member[]
   created_at: string

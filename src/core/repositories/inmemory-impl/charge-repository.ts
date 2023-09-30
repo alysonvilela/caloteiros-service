@@ -4,6 +4,17 @@ import { ChargeRepository } from "../charge-repository";
 export class ChargeRepositoryInMemory implements ChargeRepository {
   public db: Charge[] = [];
 
+  private static instance: ChargeRepositoryInMemory;
+
+  private constructor() {}
+  static getInstance(): ChargeRepositoryInMemory {
+    if (!ChargeRepositoryInMemory.instance) {
+      ChargeRepositoryInMemory.instance = new ChargeRepositoryInMemory();
+    }
+
+    return ChargeRepositoryInMemory.instance;
+  }
+
   async queryByChargeId(chargeId: string): Promise<Charge | null> {
     const charge = this.db.find((i) => i.id === chargeId);
     if (charge) {

@@ -23,10 +23,10 @@ package:
   individually: true
 
 functions:
-  send:
-    handler: src/functions/service-owner-controller.handler
+  service:
+    handler: src/controllers/service-owner/register-service-owner.handler
     events: 
       - http:
-          path: send
+          path: service/register
           method: post
           

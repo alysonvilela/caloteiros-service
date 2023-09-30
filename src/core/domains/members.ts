@@ -1,11 +1,12 @@
-import { BaseEntity } from "../../core/base/entity";
+import { BaseEntity, Flatted } from "../../core/base/entity";
 import { Optional } from "../../utils/optional";
 
-interface IMember {
+export interface IMember {
   phone: string;
   added_at: string;
   deleted_at: string | null;
 }
+
 export class Member extends BaseEntity<IMember> {
 
   get phone() {

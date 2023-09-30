@@ -1,4 +1,6 @@
-import { ServiceOwner } from "../domains/service-owner";
+import { Flatted } from "../base/entity";
+import { IServiceOwner, ServiceOwner } from "../domains/service-owner";
+import { ConflictError } from "../errors/conflict-error";
 import { ServiceOwnerRepository } from "../repositories/service-owners-repository";
 
 interface UsecaseResquest {
@@ -8,6 +10,7 @@ interface UsecaseResquest {
 }
 
 interface UsecaseResponse {
+  body?: Flatted<IServiceOwner> | ConflictError
   status: 201 | 409;
 }
 
@@ -22,6 +25,7 @@ export class RegisterServiceOwnerUseCase {
     if (existing) {
       return {
         status: 409,
+        body: new ConflictError()
       };
     }
 
@@ -34,6 +38,7 @@ export class RegisterServiceOwnerUseCase {
     await this.serviceOwnersRepository.register(owner);
 
     return {
+      body: owner.flatted,
       status: 201,
     };
   }

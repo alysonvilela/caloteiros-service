@@ -1,7 +1,7 @@
-import { BaseEntity } from "../../core/base/entity";
+import { BaseEntity, Flatted } from "../../core/base/entity";
 import { Optional } from "../../utils/optional";
 
-interface ICharge {
+export interface ICharge {
   owner_id: string
   service: {
     name: string
