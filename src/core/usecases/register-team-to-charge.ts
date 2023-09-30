@@ -10,7 +10,7 @@ interface UsecaseResquest {
 }
 
 interface UsecaseResponse {
-  status: 201 | 409 | 401
+  status: 201 | 409 | 401;
 }
 
 export class RegisterTeamToChargeUseCase {
@@ -20,15 +20,17 @@ export class RegisterTeamToChargeUseCase {
   ) {}
 
   async execute(req: UsecaseResquest): Promise<UsecaseResponse> {
-    const charge = await this.chargeRepository.queryByChargeId(req.charge_id)
+    const charge = await this.chargeRepository.queryByChargeId(req.charge_id);
 
-    if(charge?.ownerId === req.owner_id) {
-      const chargeHasTeam = await this.teamRepository.queryByChargeId(req.charge_id)
+    if (charge?.ownerId === req.owner_id) {
+      const chargeHasTeam = await this.teamRepository.queryByChargeId(
+        req.charge_id
+      );
 
-      if(chargeHasTeam) {
+      if (chargeHasTeam) {
         return {
-          status: 409
-        }
+          status: 409,
+        };
       }
 
       let members: Member[] = [];
@@ -38,20 +40,20 @@ export class RegisterTeamToChargeUseCase {
         });
         members.push(member);
       }
-  
+
       const team = Team.create({
         charge_id: req.charge_id,
         members,
       });
-  
-      await this.teamRepository.register(team)
-  
+
+      await this.teamRepository.register(team);
+
       return {
         status: 201,
       };
     }
     return {
-      status: 401
-    }
+      status: 401,
+    };
   }
 }

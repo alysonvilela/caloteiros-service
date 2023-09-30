@@ -1,12 +1,15 @@
 interface MakeMessageParams {
-  customMessage: string | null,
-  serviceName: string,
-  pixKey: string,
-  value: number
+  customMessage: string | null;
+  serviceName: string;
+  pixKey: string;
+  value: number;
 }
 export const makeMessage = (params: MakeMessageParams) => `
-${params.customMessage ?? `Eai caloteiro, lembra do ${params.serviceName}? 
-Entao, to aqui pra cobrar, COMEDIA!`}
+${
+  params.customMessage ??
+  `Eai caloteiro, lembra do ${params.serviceName}? 
+Entao, to aqui pra cobrar, COMEDIA!`
+}
 
 ----
 VALOR: R$: ${params.value}

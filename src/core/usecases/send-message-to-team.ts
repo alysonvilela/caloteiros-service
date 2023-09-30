@@ -1,7 +1,7 @@
 import { TeamRepository } from "../repositories/team-repository";
 import { ChargeRepository } from "../repositories/charge-repository";
 import { makeMessage } from "../../utils/make-message";
-import { HttpClient } from "../../adapters/http-client"
+import { HttpClient } from "../../adapters/http-client";
 import { ServiceOwnerRepository } from "../repositories/service-owners-repository";
 
 interface UsecaseResquest {
@@ -18,28 +18,32 @@ export class SendMessageToTeamsUseCase {
   ) {}
 
   async execute(req: UsecaseResquest): Promise<void> {
-    const charge = await this.chargeRepository.queryByChargeId(req.charge_id)
+    const charge = await this.chargeRepository.queryByChargeId(req.charge_id);
 
-    if(charge) {
-      const chargeTeam = await this.teamRepository.queryByChargeId(charge.id)
-      const owner = await this.serviceOwnerRepository.queryById(charge.ownerId)
+    if (charge) {
+      const chargeTeam = await this.teamRepository.queryByChargeId(charge.id);
+      const owner = await this.serviceOwnerRepository.queryById(charge.ownerId);
       if (chargeTeam) {
-        const valueForEachMember = charge.service.value / (chargeTeam.members.length + 1) // + 1 - Contando o owner
+        const valueForEachMember =
+          charge.service.value / (chargeTeam.members.length + 1); // + 1 - Contando o owner
         const message = makeMessage({
           customMessage: charge.customMessage ?? null,
           serviceName: charge.service.name,
           value: valueForEachMember,
-          pixKey: owner?.pixKey ?? "vc sabe qual eh otari0!"
-        })
+          pixKey: owner?.pixKey ?? "vc sabe qual eh otari0!",
+        });
 
         for (const member of chargeTeam.members) {
-          await this.httpClient.request.get(`${process.env.WHATSAPP_BASE_URL}/api/sendText`, {
-            params: {
-              phone: member.phone,
-              text: message,
-              session: 'default' // NOT PREMIUM YET
+          await this.httpClient.request.get(
+            `${process.env.WHATSAPP_BASE_URL}/api/sendText`,
+            {
+              params: {
+                phone: member.phone,
+                text: message,
+                session: "default", // NOT PREMIUM YET
+              },
             }
-          })
+          );
         }
       }
     }

@@ -1,4 +1,5 @@
 import { ChargeRepository } from "../repositories/charge-repository";
+import { formatDateToCron } from "../../utils/format-date-to-cron"
 
 export class GetChargesToSendMessagesUseCase {
   constructor(
