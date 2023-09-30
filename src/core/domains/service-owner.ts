@@ -1,21 +1,15 @@
 import { BaseEntity } from "../../core/base/entity";
 import { Optional } from "../../utils/optional";
-import { Member } from "./members";
 
-interface ITeam {
-  charge_id: string
-  members: Member[]
-  created_at: string
-  updated_at: string | null
+interface IServiceOwner {
+  pix_key: string;
+  created_at: string;
+  updated_at: string | null;
 }
-export class Team extends BaseEntity<ITeam> {
+export class ServiceOwner extends BaseEntity<IServiceOwner> {
 
-  get chargeId() {
-    return this.props.charge_id
-  }
-
-  get members() {
-    return this.props.members
+  get pixKey() {
+    return this.props.pix_key
   }
 
   get createdAt() {
@@ -27,10 +21,10 @@ export class Team extends BaseEntity<ITeam> {
   }
 
   static create(
-    props: Optional<ITeam, "created_at" | "updated_at">,
+    props: Optional<IServiceOwner, "created_at" | "updated_at">,
     id?: string
   ) {
-    const team = new Team(
+    const serviceOwner = new ServiceOwner(
       {
         ...props,
         created_at: props.created_at ?? new Date().toISOString(),
@@ -39,6 +33,6 @@ export class Team extends BaseEntity<ITeam> {
       id
     );
 
-    return team
+    return serviceOwner
   }
 }
