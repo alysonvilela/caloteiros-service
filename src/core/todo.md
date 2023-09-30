@@ -1,5 +1,0 @@
-- Cadastra numero dos envolvidos no time
-- Cadastra a chave pix
-- Cadastra o valor do servico comprado
-- Seleciona dia de cobranca
-- Envia mensagem no zap para cobrar os caloteiro
