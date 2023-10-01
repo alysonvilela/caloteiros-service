@@ -1,6 +1,7 @@
 import { ChargeRepository } from "../repositories/charge-repository";
-import { Charge } from "../domains/charge";
+import { Charge, ICharge } from "../domains/charge";
 import { formatDateToCron } from "../../utils/format-date-to-cron";
+import { Flatted } from "../base/entity";
 
 interface UsecaseResquest {
   ownerId: string;
@@ -12,10 +13,11 @@ interface UsecaseResquest {
 
 interface UsecaseResponse {
   status: 201;
+  body: Flatted<ICharge>
 }
 
 export class RegisterChargeUseCase {
-  constructor(private readonly chargesRepository: ChargeRepository) {}
+  constructor(private readonly chargeRepository: ChargeRepository) {}
 
   async execute(req: UsecaseResquest): Promise<UsecaseResponse> {
     const charge = Charge.create({
@@ -28,10 +30,11 @@ export class RegisterChargeUseCase {
       demand_day: req.demandDay,
     });
 
-    await this.chargesRepository.register(charge);
-
+    await this.chargeRepository.register(charge);
+    
     return {
       status: 201,
+      body: charge.flatted
     };
   }
 }
