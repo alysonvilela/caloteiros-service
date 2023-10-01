@@ -17,7 +17,7 @@ Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 - [X] Cadastra cobrancas
 - [X] Adiciona time(envolvidos) na cobranca
 - [X] Envia mensagem de cobranca para os caloteiros na data determinada
-- [P] Cria fila para envio de mensagens
 - [ ] Adicionar "taxa do agiota" no calculo de cobranca
+- [ ] Cria fila para envio de mensagens
 - [ ] Frontend pra quem nao sabe usar postman
 - [ ] Adicionar autenticacao e validar em todas rotas que tem owner_id no usecase
