@@ -1,3 +1,5 @@
+import { formatCentsToReal } from "./format-from-cents-to-real";
+
 interface MakeMessageParams {
   customMessage: string | null;
   serviceName: string;
@@ -12,7 +14,7 @@ Entao, to aqui pra cobrar, COMEDIA!`
 }
 
 ----
-VALOR: R$: ${params.value}
+VALOR: ${formatCentsToReal(params.value)}
 PIX: ${params.pixKey}
 ATE HOJE MEMO, SE NAO DEPOSITAR OS CARA VAO BATER AI NA SUA PORTA
 ----
