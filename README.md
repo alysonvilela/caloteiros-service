@@ -5,9 +5,10 @@ Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 ## Techs
 - **WAHA + Venom -** Automacao whatsapp, expoe endpoints para envio de mensagens, autenticacao e afins.
 - **Serverless/AWS Lambda -** Configuracao de cron jobs facilitada.
-- **PostgreSQL -** Banco
-- **PNPM -** Gerenciador de pacotes
+- **PostgreSQL -** Banco.
+- **PNPM -** Gerenciador de pacotes.
 - **Axios -** Conexao com apis externas.
+- **Zod -** Validacao de entrada de dados.
 
 
 ## O que a parada faz?

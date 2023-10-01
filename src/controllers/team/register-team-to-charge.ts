@@ -1,8 +1,5 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { RegisterServiceOwnerUseCase } from "../../core/usecases/register-a-charge";
 import { inMemoryRepositories } from "../../core/repositories/inmemory-impl";
-import { RegisterChargeUseCase } from "../../core/usecases/register-a-service-owner";
-import { RegisterTeamToChargeUseCase } from "../../core/usecases/register-team-to-charge";
 import { SendMessageToTeamsUseCase } from "../../core/usecases/send-message-to-team";
 import { HttpClient } from "../../adapters/http-client";
 

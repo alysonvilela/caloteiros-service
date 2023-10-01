@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { RegisterServiceOwnerUseCase } from "../../core/usecases/register-a-charge";
 import { inMemoryRepositories } from "../../core/repositories/inmemory-impl";
+import { RegisterServiceOwnerUseCase } from "../../core/usecases/register-service-owner";
 
 
 export const handler: APIGatewayProxyHandler = async (event) => {

@@ -23,6 +23,9 @@ dependencies:
   ulid:
     specifier: ^2.3.0
     version: 2.3.0
+  zod:
+    specifier: ^3.22.2
+    version: 3.22.2
 
 devDependencies:
   '@types/aws-lambda':
@@ -40,6 +43,9 @@ devDependencies:
   serverless-offline-watcher:
     specifier: ^1.1.0
     version: 1.1.0
+  typescript:
+    specifier: ^5.2.2
+    version: 5.2.2
 
 packages:
 
@@ -4451,6 +4457,12 @@ packages:
     resolution: {integrity: sha512-dzlvlNlt6AXU7EBSfpAscydQ7gXB+pPGsPnfJnZpiNJBDj7IaJzQlBZYGdEi4R9HmPdBv2XmWJ6YUtoTa7lmCw==}
     dev: false
 
+  /typescript@5.2.2:
+    resolution: {integrity: sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: true
+
   /ulid@2.3.0:
     resolution: {integrity: sha512-keqHubrlpvT6G2wH0OEfSW4mquYRcbe/J8NMmveoQOjUqmo+hXtO+ORCpWhdbZ7k72UtY61BL7haGxW6enBnjw==}
     hasBin: true
@@ -4726,3 +4738,7 @@ packages:
       archiver-utils: 3.0.4
       compress-commons: 4.1.2
       readable-stream: 3.6.2
+
+  /zod@3.22.2:
+    resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
+    dev: false
