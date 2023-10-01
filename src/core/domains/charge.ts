@@ -8,7 +8,7 @@ export interface ICharge {
     value: number
   }
   demand_day: string
-  custom_message:string
+  custom_message?:string
   created_at: string
   updated_at: string | null
   deleted_at: string | null

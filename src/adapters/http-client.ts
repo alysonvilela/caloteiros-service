@@ -1,5 +1,5 @@
 import axios, { AxiosStatic } from "axios";
-class HttpClient {
+export class HttpClient {
   public request: AxiosStatic = axios;
   private static instance: HttpClient;
 

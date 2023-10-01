@@ -6,7 +6,7 @@ interface UsecaseResquest {
   ownerId: string;
   serviceName: string;
   servicePrice: number;
-  customMessage: string;
+  customMessage?: string;
   demandDay: string;
 }
 

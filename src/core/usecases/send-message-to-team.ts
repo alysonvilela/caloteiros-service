@@ -25,7 +25,7 @@ export class SendMessageToTeamsUseCase {
       const owner = await this.serviceOwnerRepository.queryById(charge.ownerId);
       if (chargeTeam) {
         const valueForEachMember =
-          charge.service.value / (chargeTeam.members.length + 1); // + 1 - Contando o owner
+          charge.service.value / (chargeTeam.members.length + 1); // + 1 - Because owner counts
         const message = makeMessage({
           customMessage: charge.customMessage ?? null,
           serviceName: charge.service.name,
