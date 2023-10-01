@@ -14,6 +14,7 @@ const bodySchema = z.object({
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   const json: unknown = JSON.parse(event.body);
+  
   const dto = bodySchema.safeParse(json);
 
   if (!dto.success) {

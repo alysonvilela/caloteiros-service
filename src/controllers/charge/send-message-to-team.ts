@@ -10,8 +10,7 @@ const bodySchema = z.object({
 });
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  const json: unknown = JSON.parse(event.body);
-  const dto = bodySchema.safeParse(json);
+  const dto = bodySchema.safeParse(event.pathParameters);
 
   if (!dto.success) {
     return { statusCode: 400, body: JSON.stringify(new BadRequest()) };

@@ -39,12 +39,12 @@ functions:
     handler: src/controllers/charge/register-team-to-charge.handler
     events: 
       - http:
-          path: charge/{id}/add-team
+          path: charge/{chargeId}/add-team
           method: post
   charge-call:
     handler: src/controllers/charge/send-message-to-team.handler
     events: 
       - http:
-          path: charge/{id}/call
+          path: charge/{chargeId}/call
           method: post
           

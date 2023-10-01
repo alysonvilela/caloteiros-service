@@ -6,33 +6,37 @@ import { RegisterTeamToChargeUseCase } from "src/core/usecases/register-team-to-
 import { z } from "zod";
 import { BadRequest } from "src/core/errors/bad-request";
 
-const bodySchema = z.object({
+const pathSchema = z.object({
   chargeId: z.string(),
-  ownerId: z.string(),
-  phones: z.array(z.string())
 });
 
+const bodySchema = z.object({
+  ownerId: z.string(),
+  phones: z.array(z.string()),
+});
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   const json: unknown = JSON.parse(event.body);
+  const path = pathSchema.safeParse(event.pathParameters);
   const dto = bodySchema.safeParse(json);
+
+  if (!path.success) {
+    return { statusCode: 400, body: JSON.stringify(new BadRequest()) };
+  }
 
   if (!dto.success) {
     return { statusCode: 400, body: JSON.stringify(new BadRequest()) };
   }
 
-
   const usecase = new RegisterTeamToChargeUseCase(
     inMemoryRepositories.teamRepository,
-    inMemoryRepositories.chargeRepository,
+    inMemoryRepositories.chargeRepository
   );
 
   await usecase.execute({
-    charge_id: 'charge-id',
-    owner_id: 'owner-id',
-    phones: [
-      "55989915632"
-    ]
+    charge_id: path.data.chargeId,
+    owner_id: dto.data.ownerId,
+    phones: dto.data.phones,
   });
 
   return {
