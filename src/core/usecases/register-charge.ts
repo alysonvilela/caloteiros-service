@@ -25,7 +25,7 @@ export class RegisterChargeUseCase {
         value: req.servicePrice,
       },
       custom_message: req.customMessage,
-      demand_day: formatDateToCron(new Date(req.demandDay)),
+      demand_day: req.demandDay,
     });
 
     await this.chargesRepository.register(charge);

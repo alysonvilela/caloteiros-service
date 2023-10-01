@@ -23,10 +23,28 @@ package:
   individually: true
 
 functions:
-  service:
+  admin-register:
     handler: src/controllers/service-owner/register-service-owner.handler
     events: 
       - http:
-          path: service/register
+          path: admin/register
+          method: post
+  charge-register:
+    handler: src/controllers/charge/register-charge.handler
+    events: 
+      - http:
+          path: charge/register
+          method: post
+  charge-add-team:
+    handler: src/controllers/charge/register-team-to-charge.handler
+    events: 
+      - http:
+          path: charge/{id}/add-team
+          method: post
+  charge-call:
+    handler: src/controllers/charge/send-message-to-team.handler
+    events: 
+      - http:
+          path: charge/{id}/call
           method: post
           
