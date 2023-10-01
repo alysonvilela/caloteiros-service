@@ -17,7 +17,21 @@ Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 - [X] Cadastra cobrancas
 - [X] Adiciona time(envolvidos) na cobranca
 - [X] Envia mensagem de cobranca para os caloteiros na data determinada
+- [ ] Testes unitarios
+  - [ ] Entidades/models
+  - [ ] Usecases
 - [ ] Adicionar "taxa do agiota" no calculo de cobranca
 - [ ] Cria fila para envio de mensagens
 - [ ] Frontend pra quem nao sabe usar postman
 - [ ] Adicionar autenticacao e validar em todas rotas que tem owner_id no usecase
+- [ ] Listagem de charges do administrador
+- [ ] Historico de disparos
+
+
+## Endpoints
+### Admin
+- /admin/register - Primeiro passo de todos, criar um usuario.
+### Charges - Precisa de um administrador
+- /charge/register - Um administrador cria uma cobranca
+- /charge/{chargeId}/add-team - Um administrador adiciona um time a cobranca
+- /charge/{chargeId}/call - Dispara envio de mensagens para os caloteiros 
