@@ -8,6 +8,7 @@ export interface ITeam {
   created_at: string
   updated_at: string | null
 }
+
 export class Team extends BaseEntity<ITeam> {
 
   get chargeId() {
@@ -26,13 +27,20 @@ export class Team extends BaseEntity<ITeam> {
     return this.props.updated_at
   }
 
+  public addMembers(members: Member[]) {
+    this.props.members = members
+
+    return this
+  }
+
   static create(
-    props: Optional<ITeam, "created_at" | "updated_at">,
+    props: Optional<ITeam, "created_at" | "updated_at" | "members">,
     id?: string
   ) {
     const team = new Team(
       {
         ...props,
+        members: [],
         created_at: props.created_at ?? new Date().toISOString(),
         updated_at: props.updated_at ?? null,
       },

@@ -32,7 +32,7 @@ export class SendMessageToTeamsUseCase {
           value: valueForEachMember,
           pixKey: owner?.pixKey ?? "vc sabe qual eh otari0!",
         });
-
+      
         for (const member of chargeTeam.members) {
           await this.httpClient.request.get(
             `${process.env.WHATSAPP_BASE_URL}/api/sendText`,
@@ -40,8 +40,8 @@ export class SendMessageToTeamsUseCase {
               params: {
                 phone: member.phone,
                 text: message,
-                session: "default", // NOT PREMIUM YET
-              },
+                session: 'default'
+              }
             }
           );
         }

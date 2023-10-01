@@ -5,6 +5,8 @@ import { httpClient } from "../../adapters/http-client";
 import { RegisterTeamToChargeUseCase } from "src/core/usecases/register-team-to-charge";
 import { z } from "zod";
 import { BadRequest } from "src/core/errors/bad-request";
+import { TeamRepositoryPg } from "src/core/repositories/pg-impl/team-repository";
+import { ChargeRepositoryPg } from "src/core/repositories/pg-impl/charge-repository";
 
 const pathSchema = z.object({
   chargeId: z.string(),
@@ -29,8 +31,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
   const usecase = new RegisterTeamToChargeUseCase(
-    inMemoryRepositories.teamRepository,
-    inMemoryRepositories.chargeRepository
+    TeamRepositoryPg.getInstance(),
+    ChargeRepositoryPg.getInstance()
   );
 
   await usecase.execute({

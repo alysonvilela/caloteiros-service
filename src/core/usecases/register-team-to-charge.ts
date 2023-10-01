@@ -22,29 +22,34 @@ export class RegisterTeamToChargeUseCase {
   async execute(req: UsecaseResquest): Promise<UsecaseResponse> {
     const charge = await this.chargeRepository.queryByChargeId(req.charge_id);
 
+
     if (charge?.ownerId === req.owner_id) {
       const chargeHasTeam = await this.teamRepository.queryByChargeId(
         req.charge_id
       );
 
-      if (chargeHasTeam) {
-        return {
-          status: 409,
-        };
-      }
+      console.log({chargeHasTeam})
+
+
+      // if (chargeHasTeam) {
+      //   return {
+      //     status: 409,
+      //   };
+      // }
 
       let members: Member[] = [];
+      const team = Team.create({
+        charge_id: req.charge_id,
+      });
       for (const phone of req.phones) {
         const member = Member.create({
           phone,
+          team_id: team.id
         });
-        members.push(member);
+        members.push(member)
       }
 
-      const team = Team.create({
-        charge_id: req.charge_id,
-        members,
-      });
+      team.addMembers(members);
 
       await this.teamRepository.register(team);
 

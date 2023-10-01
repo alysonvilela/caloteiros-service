@@ -2,6 +2,7 @@ import { BaseEntity, Flatted } from "../../core/base/entity";
 import { Optional } from "../../utils/optional";
 
 export interface IMember {
+  team_id: string;
   phone: string;
   added_at: string;
   deleted_at: string | null;
