@@ -7,6 +7,7 @@ export class ServiceOwnerRepositoryInMemory implements ServiceOwnerRepository {
   public db: ServiceOwner[] = [];
 
   private constructor() {}
+
   static getInstance(): ServiceOwnerRepositoryInMemory {
     if (!ServiceOwnerRepositoryInMemory.instance) {
       ServiceOwnerRepositoryInMemory.instance = new ServiceOwnerRepositoryInMemory();
@@ -33,7 +34,9 @@ export class ServiceOwnerRepositoryInMemory implements ServiceOwnerRepository {
     return null;
   }
 
-  async register(serviceOwner: ServiceOwner): Promise<void> {
-    this.db.push(serviceOwner);
+  async register(serviceOwner: ServiceOwner): Promise<ServiceOwner> {
+    this.db.push(serviceOwner)
+    return serviceOwner
   }
+
 }

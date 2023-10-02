@@ -17,7 +17,7 @@ export class ChargeRepositoryPg implements ChargeRepository {
   }
 
 
-  async queryByChargeId(chargeId: string): Promise<Charge> {
+  async queryById(chargeId: string): Promise<Charge> {
     try {
       const result = await sql`
       SELECT * FROM charge WHERE id = ${chargeId}
@@ -58,7 +58,7 @@ export class ChargeRepositoryPg implements ChargeRepository {
 
     return serviceOwner;
     } catch(err) {
-      console.error(pgError(this.queryByChargeId.name), err)
+      console.error(pgError(this.queryById.name), err)
       return null
     }
   }
@@ -79,8 +79,6 @@ export class ChargeRepositoryPg implements ChargeRepository {
 
   async register(charge: Charge): Promise<void> {
     const { id, ownerId, service,customMessage, created_at, deleted_at, demandDay, updated_at, } = charge;
-
-    console.log({charge: charge.flatted})
 
     try {
       await sql`

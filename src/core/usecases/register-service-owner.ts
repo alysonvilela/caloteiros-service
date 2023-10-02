@@ -20,8 +20,6 @@ export class RegisterServiceOwnerUseCase {
   ) {}
 
   async execute(req: UsecaseResquest): Promise<UsecaseResponse> {
-    console.log('req')
-
     const existing = await this.serviceOwnersRepository.queryByPhone(req.phone);
 
     if (existing) {

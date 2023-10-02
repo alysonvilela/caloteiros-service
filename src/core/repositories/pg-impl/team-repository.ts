@@ -80,8 +80,6 @@ export class TeamRepositoryPg implements TeamRepository {
       })
     `;
 
-      console.log({ run: team });
-
       await this.registerMembers(team.members, team.id);
     } catch (err) {
       console.error(pgError(this.queryByChargeId.name), err);

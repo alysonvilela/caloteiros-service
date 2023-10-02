@@ -1,10 +1,8 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { inMemoryRepositories } from "../../core/repositories/inmemory-impl";
 import { SendMessageToTeamsUseCase } from "../../core/usecases/send-message-to-team";
 import { httpClient } from "../../adapters/http-client";
 import { BadRequest } from "src/core/errors/bad-request";
 import { z } from "zod";
-import { RegisterTeamToChargeUseCase } from "src/core/usecases/register-team-to-charge";
 import { ServiceOwnerRepositoryPg } from "src/core/repositories/pg-impl/service-owners-repository";
 import { ChargeRepositoryPg } from "src/core/repositories/pg-impl/charge-repository";
 import { TeamRepositoryPg } from "src/core/repositories/pg-impl/team-repository";

@@ -1,8 +1,5 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { inMemoryRepositories } from "../../core/repositories/inmemory-impl";
-import { SendMessageToTeamsUseCase } from "../../core/usecases/send-message-to-team";
-import { httpClient } from "../../adapters/http-client";
-import { RegisterTeamToChargeUseCase } from "src/core/usecases/register-team-to-charge";
+import { RegisterTeamToChargeUseCase } from "../../core/usecases/register-team-to-charge";
 import { z } from "zod";
 import { BadRequest } from "src/core/errors/bad-request";
 import { TeamRepositoryPg } from "src/core/repositories/pg-impl/team-repository";
@@ -35,16 +32,14 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     ChargeRepositoryPg.getInstance()
   );
 
-  await usecase.execute({
+  const res = await usecase.execute({
     charge_id: path.data.chargeId,
     owner_id: dto.data.ownerId,
     phones: dto.data.phones,
   });
 
   return {
-    body: JSON.stringify({
-      ok: true,
-    }),
-    statusCode: 200,
+    body: "",
+    statusCode: res.status,
   };
 };

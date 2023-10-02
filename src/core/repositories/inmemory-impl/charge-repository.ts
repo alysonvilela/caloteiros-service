@@ -15,7 +15,7 @@ export class ChargeRepositoryInMemory implements ChargeRepository {
     return ChargeRepositoryInMemory.instance;
   }
 
-  async queryByChargeId(chargeId: string): Promise<Charge | null> {
+  async queryById(chargeId: string): Promise<Charge | null> {
     const charge = this.db.find((i) => i.id === chargeId);
     if (charge) {
       return charge;

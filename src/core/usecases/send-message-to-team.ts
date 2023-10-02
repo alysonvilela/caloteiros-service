@@ -18,7 +18,7 @@ export class SendMessageToTeamsUseCase {
   ) {}
 
   async execute(req: UsecaseResquest): Promise<void> {
-    const charge = await this.chargeRepository.queryByChargeId(req.charge_id);
+    const charge = await this.chargeRepository.queryById(req.charge_id);
 
     if (charge) {
       const chargeTeam = await this.teamRepository.queryByChargeId(charge.id);
