@@ -3,6 +3,7 @@ import { Team } from "../../domains/team";
 import { TeamRepository } from "../team-repository";
 import { Member } from "src/core/domains/members";
 import { pgError } from "src/utils/pg-error";
+// import { PostgresError } from "postgres/src/errors";
 
 export class TeamRepositoryPg implements TeamRepository {
   private static instance: TeamRepositoryPg;
@@ -90,20 +91,16 @@ export class TeamRepositoryPg implements TeamRepository {
 
   async registerMembers(members: Member[], teamId: string): Promise<void> {
     try {
-      const flatMembers = members.map((member) => member.flatted);
-      const query = await sql`
-      INSERT INTO member (id, phone, added_at, deleted_at, team_id)
-      VALUES
-        ${flatMembers
-          .map(
-            (flat) =>
-              `(${flat.id}, ${flat.phone}, ${flat.added_at}, ${
-                flat.deleted_at || null
-              }, ${teamId})`
-          )
-          .join(",\n  ")};
-    `;
-      console.log({ query });
+      const flatMembers = members.map((member) => ({
+        id: member.id,
+        phone: member.flatted.phone,
+        added_at: member.flatted.added_at,
+        deleted_at: member.flatted.deleted_at ?? null,
+        team_id: teamId,
+      }));
+
+      await sql`insert into member ${sql(flatMembers, 'id', 'phone', 'added_at', 'deleted_at', 'team_id')}`;
+
     } catch (err) {
       console.error(pgError(this.registerMembers.name), err);
       return null;
