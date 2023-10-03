@@ -47,4 +47,10 @@ functions:
       - http:
           path: charge/{chargeId}/call
           method: post
+  list-service-owner-charges:
+    handler: src/controllers/charge/list-service-owner-charges.handler
+    events: 
+      - http:
+          path: charge/list
+          method: get
           

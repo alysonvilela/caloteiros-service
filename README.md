@@ -17,6 +17,7 @@ Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 - [X] Cadastra cobrancas
 - [X] Adiciona time(envolvidos) na cobranca
 - [X] Envia mensagem de cobranca para os caloteiros na data determinada
+- [X] Listagem de charges do administrador
 - [ ] Testes unitarios
   - [ ] Entidades/models
   - [ ] Usecases
@@ -24,7 +25,6 @@ Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 - [ ] Cria fila para envio de mensagens
 - [ ] Frontend pra quem nao sabe usar postman
 - [ ] Adicionar autenticacao e validar em todas rotas que tem owner_id no usecase
-- [ ] Listagem de charges do administrador
 - [ ] Historico de disparos
 
 
@@ -35,3 +35,4 @@ Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 - /charge/register - Um administrador cria uma cobranca
 - /charge/{chargeId}/add-team - Um administrador adiciona um time a cobranca
 - /charge/{chargeId}/call - Dispara envio de mensagens para os caloteiros 
+- /charge/list - Lista todos agendamentos de cobranca

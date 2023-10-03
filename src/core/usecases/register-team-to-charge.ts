@@ -18,7 +18,7 @@ interface RequestBody {
 
 interface UsecaseResponse {
   status: 201 | 409 | 401;
-  body?: RequestBody
+  body?: RequestBody | { message: string }
 }
 
 export class RegisterTeamToChargeUseCase {
@@ -39,6 +39,9 @@ export class RegisterTeamToChargeUseCase {
       if (chargeHasTeam?.flatted?.members?.length) {
         return {
           status: 409,
+          body: {
+            message: "There is an existing team to this charge."
+          }
         };
       }
 

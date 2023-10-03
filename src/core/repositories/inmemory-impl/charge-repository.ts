@@ -7,6 +7,7 @@ export class ChargeRepositoryInMemory implements ChargeRepository {
   private static instance: ChargeRepositoryInMemory;
 
   private constructor() {}
+
   static getInstance(): ChargeRepositoryInMemory {
     if (!ChargeRepositoryInMemory.instance) {
       ChargeRepositoryInMemory.instance = new ChargeRepositoryInMemory();
@@ -34,6 +35,12 @@ export class ChargeRepositoryInMemory implements ChargeRepository {
     }
 
     return null;
+  }
+
+  async queryAllByOwnerId(ownerId: string): Promise<Charge[]> {
+    const charges = this.db.filter((i) => i.flatted.owner_id === ownerId);
+
+    return [...charges];
   }
 
   async register(charge: Charge): Promise<void> {
