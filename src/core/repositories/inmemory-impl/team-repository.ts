@@ -15,7 +15,7 @@ export class TeamRepositoryInMemory implements TeamRepository {
   }
 
   async queryByChargeId(chargeId: string): Promise<Team | null> {
-    const team = this.db.find((i) => i.chargeId === chargeId);
+    const team = this.db.find((i) => i.flatted.charge_id === chargeId);
     if (team) {
       return team;
     }

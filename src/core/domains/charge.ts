@@ -16,34 +16,6 @@ export interface ICharge {
 
 export class Charge extends BaseEntity<ICharge> {
 
-  get ownerId() {
-    return this.props.owner_id
-  }
-
-  get service() {
-    return this.props.service
-  }
-
-  get demandDay() {
-    return this.props.demand_day
-  }
-
-  get customMessage() {
-    return this.props.custom_message
-  }
-
-  get created_at() {
-    return this.props.created_at
-  }
-
-  get updated_at() {
-    return this.props.updated_at
-  }
-
-  get deleted_at() {
-    return this.props.deleted_at
-  }
-
   static create(
     props: Optional<ICharge, "created_at" | "updated_at" | "deleted_at">,
     id?: string

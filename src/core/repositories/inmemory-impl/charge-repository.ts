@@ -27,7 +27,7 @@ export class ChargeRepositoryInMemory implements ChargeRepository {
     demandDay: string
   ): Promise<string[] | null> {
     const charges = this.db
-      .filter((i) => i.demandDay === demandDay)
+      .filter((i) => i.flatted.demand_day === demandDay)
       .map((i) => i.id);
     if (charges.length) {
       return charges;

@@ -11,26 +11,6 @@ export interface IServiceOwner {
 
 export class ServiceOwner extends BaseEntity<IServiceOwner> {
 
-  get name() {
-    return this.props.name
-  }
-
-  get phone() {
-    return this.props.phone
-  }
-
-  get pixKey() {
-    return this.props.pix_key
-  }
-
-  get createdAt() {
-    return this.props.created_at
-  }
-
-  get updatedAt() {
-    return this.props.updated_at
-  }
-
   static create(
     props: Optional<IServiceOwner, "created_at" | "updated_at">,
     id?: string

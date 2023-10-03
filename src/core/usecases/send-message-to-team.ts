@@ -21,24 +21,24 @@ export class SendMessageToTeamsUseCase {
     const charge = await this.chargeRepository.queryById(req.charge_id);
 
     if (charge) {
-      const chargeTeam = await this.teamRepository.queryByChargeId(charge.id);
-      const owner = await this.serviceOwnerRepository.queryById(charge.ownerId);
+      const chargeTeam = await this.teamRepository.queryByChargeId(charge.flatted.id);
+      const owner = await this.serviceOwnerRepository.queryById(charge.flatted.owner_id);
       if (chargeTeam) {
         const valueForEachMember =
-          charge.service.value / (chargeTeam.members.length + 1); // + 1 - Because owner counts
+          charge.flatted.service.value / (chargeTeam.flatted.members.length + 1); // + 1 - Because owner counts
         const message = makeMessage({
-          customMessage: charge.customMessage ?? null,
-          serviceName: charge.service.name,
+          customMessage: charge.flatted.custom_message ?? null,
+          serviceName: charge.flatted.service.name,
           value: valueForEachMember,
-          pixKey: owner?.pixKey ?? "vc sabe qual eh otari0!",
+          pixKey: owner?.flatted.pix_key ?? "vc sabe qual eh otari0!",
         });
       
-        for (const member of chargeTeam.members) {
+        for (const member of chargeTeam.flatted.members) {
           await this.httpClient.request.get(
             `${process.env.WHATSAPP_BASE_URL}/api/sendText`,
             {
               params: {
-                phone: member.phone,
+                phone: member.flatted.phone,
                 text: message,
                 session: 'default'
               }

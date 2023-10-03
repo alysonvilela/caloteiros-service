@@ -73,14 +73,16 @@ export class TeamRepositoryPg implements TeamRepository {
 
   async register(team: Team): Promise<void> {
     try {
-      const query = await sql`
+      const flatTeam = team.flatted
+
+      await sql`
       INSERT INTO team (id, charge_id, created_at, updated_at)
-      VALUES (${team.id}, ${team.chargeId}, ${team.createdAt}, ${
-        team.updatedAt || null
+      VALUES (${flatTeam.id}, ${flatTeam.charge_id}, ${flatTeam.created_at}, ${
+        flatTeam.updated_at || null
       })
     `;
 
-      await this.registerMembers(team.members, team.id);
+      await this.registerMembers(flatTeam.members, flatTeam.id);
     } catch (err) {
       console.error(pgError(this.queryByChargeId.name), err);
       return null;

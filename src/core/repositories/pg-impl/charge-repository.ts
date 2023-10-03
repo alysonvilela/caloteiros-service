@@ -78,12 +78,12 @@ export class ChargeRepositoryPg implements ChargeRepository {
   }
 
   async register(charge: Charge): Promise<void> {
-    const { id, ownerId, service,customMessage, created_at, deleted_at, demandDay, updated_at, } = charge;
+    const { id, owner_id, service, custom_message, created_at, deleted_at, demand_day, updated_at,  } = charge.flatted;
 
     try {
       await sql`
       INSERT INTO charge (id, owner_id, svs_name, svs_value_in_cents, demand_day, custom_message, created_at, updated_at, deleted_at)
-      VALUES (${id}, ${ownerId}, ${service.name}, ${service.value}, ${demandDay}, ${customMessage}, ${created_at}, ${updated_at}, ${deleted_at})
+      VALUES (${id}, ${owner_id}, ${service.name}, ${service.value}, ${demand_day}, ${custom_message}, ${created_at}, ${updated_at}, ${deleted_at})
     `;
     } catch (err) {
       console.error(pgError(this.register.name), err)

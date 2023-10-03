@@ -90,12 +90,12 @@ export class ServiceOwnerRepositoryPg implements ServiceOwnerRepository {
   }
 
   async register(serviceOwner: ServiceOwner): Promise<ServiceOwner | null> {
-    const { id, name, phone, pixKey, createdAt, updatedAt } = serviceOwner;
+    const { id, name, phone, pix_key, created_at, updated_at } = serviceOwner.flatted;
 
     try {
       await sql`
       INSERT INTO service_owners (id, user_name, phone, pix_key, created_at, updated_at)
-      VALUES (${id}, ${name}, ${phone}, ${pixKey}, ${createdAt}, ${updatedAt})
+      VALUES (${id}, ${name}, ${phone}, ${pix_key}, ${created_at}, ${updated_at})
     `;
     } catch (err) {
       console.error(pgError(this.register.name), err)

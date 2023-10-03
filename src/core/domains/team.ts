@@ -11,22 +11,6 @@ export interface ITeam {
 
 export class Team extends BaseEntity<ITeam> {
 
-  get chargeId() {
-    return this.props.charge_id
-  }
-
-  get members() {
-    return this.props.members
-  }
-
-  get createdAt() {
-    return this.props.created_at
-  }
-
-  get updatedAt() {
-    return this.props.updated_at
-  }
-
   public addMembers(members: Member[]) {
     this.props.members = members
 

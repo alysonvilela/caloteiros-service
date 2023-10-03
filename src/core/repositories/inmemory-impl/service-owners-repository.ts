@@ -17,7 +17,7 @@ export class ServiceOwnerRepositoryInMemory implements ServiceOwnerRepository {
   }
 
   async queryByPhone(phone: string): Promise<ServiceOwner | null> {
-    const owner = this.db.find((i) => i.phone === phone);
+    const owner = this.db.find((i) => i.flatted.phone === phone);
     if (owner) {
       return owner;
     }

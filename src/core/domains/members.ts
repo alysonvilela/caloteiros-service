@@ -10,10 +10,6 @@ export interface IMember {
 
 export class Member extends BaseEntity<IMember> {
 
-  get phone() {
-    return this.props.phone
-  }
-
   static create(
     props: Optional<IMember, "added_at" | "deleted_at">,
     id?: string
