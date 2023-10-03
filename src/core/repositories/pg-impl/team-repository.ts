@@ -74,30 +74,23 @@ export class TeamRepositoryPg implements TeamRepository {
   async register(team: Team): Promise<void> {
     try {
       const flatTeam = team.flatted
-
-      await sql`insert into team ${sql([flatTeam], 'id', 'charge_id', 'created_at', 'updated_at')}`;
-
-      await this.registerMembers(flatTeam.members, flatTeam.id);
-    } catch (err) {
-      console.error(pgError(this.queryByChargeId.name), err);
-      return null;
-    }
-  }
-
-  async registerMembers(members: Member[], teamId: string): Promise<void> {
-    try {
-      const flatMembers = members.map((member) => ({
+      const flatMembers = flatTeam.members.map((member) => ({
         id: member.id,
         phone: member.flatted.phone,
         added_at: member.flatted.added_at,
         deleted_at: member.flatted.deleted_at ?? null,
-        team_id: teamId,
+        team_id: team.id,
       }));
 
-      await sql`insert into member ${sql(flatMembers, 'id', 'phone', 'added_at', 'deleted_at', 'team_id')}`;
+      await sql`
+      insert into team ${sql([flatTeam], 'id', 'charge_id', 'created_at', 'updated_at')};
+      `;
+      await sql`
+      insert into member ${sql(flatMembers, 'id', 'phone', 'added_at', 'deleted_at', 'team_id')};
+      `
 
     } catch (err) {
-      console.error(pgError(this.registerMembers.name), err);
+      console.error(pgError(this.queryByChargeId.name), err);
       return null;
     }
   }

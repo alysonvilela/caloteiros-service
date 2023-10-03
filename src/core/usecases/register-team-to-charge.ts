@@ -1,7 +1,8 @@
 import { TeamRepository } from "../repositories/team-repository";
 import { ChargeRepository } from "../repositories/charge-repository";
-import { Team } from "../domains/team";
-import { Member } from "../domains/members";
+import { ITeam, Team } from "../domains/team";
+import { IMember, Member } from "../domains/members";
+import { Flatted } from "../base/entity";
 
 interface UsecaseResquest {
   owner_id: string;
@@ -9,8 +10,15 @@ interface UsecaseResquest {
   phones: string[];
 }
 
+interface RequestBody {
+  team: Omit<Flatted<ITeam>, 'members'> & {
+    members: Omit<Flatted<IMember>, 'team_id'>[]
+  }
+}
+
 interface UsecaseResponse {
   status: 201 | 409 | 401;
+  body?: RequestBody
 }
 
 export class RegisterTeamToChargeUseCase {
@@ -53,6 +61,14 @@ export class RegisterTeamToChargeUseCase {
 
       return {
         status: 201,
+        body: {
+            team: {
+              ...team.flatted,
+              members: team.flatted.members.map(({flatted: {team_id, ...rest}}) => ({
+                ...rest
+              }))
+            }
+        }
       };
     }
     return {

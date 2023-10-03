@@ -39,7 +39,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   });
 
   return {
-    body: "",
+    body: JSON.stringify(res?.body),
     statusCode: res.status,
   };
 };
