@@ -75,12 +75,7 @@ export class TeamRepositoryPg implements TeamRepository {
     try {
       const flatTeam = team.flatted
 
-      await sql`
-      INSERT INTO team (id, charge_id, created_at, updated_at)
-      VALUES (${flatTeam.id}, ${flatTeam.charge_id}, ${flatTeam.created_at}, ${
-        flatTeam.updated_at || null
-      })
-    `;
+      await sql`insert into team ${sql([flatTeam], 'id', 'charge_id', 'created_at', 'updated_at')}`;
 
       await this.registerMembers(flatTeam.members, flatTeam.id);
     } catch (err) {
