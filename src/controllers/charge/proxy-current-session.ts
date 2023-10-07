@@ -31,7 +31,9 @@ const fetchCurrentSession = async () => {
     },
   });
 
-  const { config, name, ...rest } = data[0]
+console.log({data})
+
+  const { config, name, ...rest } = data?.[0]
 
   return {
     ...rest,

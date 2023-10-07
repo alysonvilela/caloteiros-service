@@ -1,8 +1,8 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { z } from "zod";
 import { BadRequest } from "src/core/errors/bad-request";
-import { ChargeRepositoryPg } from "src/core/repositories/pg-impl/charge-repository";
 import { ListServiceOwnerChargesUseCase } from "src/core/usecases/list-service-owner-charges";
+import { ChargeTeamMembersRepositoryPg } from 'src/core/repositories/pg-impl/charge-team-member-repository';
 
 const bodySchema = z.object({
   "x-owner-id": z.string(),
@@ -16,7 +16,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
   const usecase = new ListServiceOwnerChargesUseCase(
-    ChargeRepositoryPg.getInstance()
+    ChargeTeamMembersRepositoryPg.getInstance()
   );
 
   const result = await usecase.execute({

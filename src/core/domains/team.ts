@@ -12,7 +12,7 @@ export interface ITeam {
 export class Team extends BaseEntity<ITeam> {
 
   public addMembers(members: Member[]) {
-    this.props.members = members
+    this.props.members = [...this.props.members, ...members]
 
     return this
   }

@@ -1,5 +1,6 @@
 import { BaseEntity, Flatted } from "../../core/base/entity";
 import { Optional } from "../../utils/optional";
+import { Team } from "./team";
 
 export interface ICharge {
   owner_id: string
@@ -9,6 +10,7 @@ export interface ICharge {
   }
   demand_day: string
   custom_message?:string
+  team?: Team
   created_at: string
   updated_at: string | null
   deleted_at: string | null
@@ -23,6 +25,7 @@ export class Charge extends BaseEntity<ICharge> {
     const charge = new Charge(
       {
         ...props,
+        custom_message: props.custom_message ?? null,
         created_at: props.created_at ?? new Date().toISOString(),
         updated_at: props.updated_at ?? null,
         deleted_at: props.deleted_at ?? null,
