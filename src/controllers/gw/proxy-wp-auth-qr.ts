@@ -1,13 +1,15 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import axios from "axios";
+import "dotenv/config";
 
 const fetchQr = async () => {
   try {
     axios.defaults.headers.get["Access-Control-Allow-Origin"] = "*";
-    axios.defaults.headers.get["Referer-Control-Allow-Origin"] =
-      "http://localhost:3000/";
-    axios.defaults.headers.get["Host"] = "localhost:3000";
-    const url = "http://localhost:3000/api/default/auth/qr";
+    axios.defaults.headers.get[
+      "Referer-Control-Allow-Origin"
+    ] = `${process.env.WHATSAPP_BASE_URL}`;
+    axios.defaults.headers.get["Host"] = `${process.env.WHATSAPP_BASE_URL}`;
+    const url = `${process.env.WHATSAPP_BASE_URL}/api/default/auth/qr`;
     const response = await axios.get(url, {
       responseType: "arraybuffer",
       headers: {
@@ -18,8 +20,6 @@ const fetchQr = async () => {
     const imageBuffer = Buffer.from(response.data, "binary").toString("base64");
     return `data:${response.headers["content-type"]};base64,${imageBuffer}`;
   } catch (err) {
-    console.log({err})
-
     // if (err.message === "Can get QR code only in SCAN_QR_CODE status. The current status is 'STARTING'") {
     //   return 'loading'
     // }
@@ -28,18 +28,21 @@ const fetchQr = async () => {
 };
 
 const fetchStartSession = async () => {
-  const {data: existingSession} = await axios.get('http://localhost:3000/api/sessions/', {
-    headers: {
-      accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
+  const { data: existingSession } = await axios.get(
+    `${process.env.WHATSAPP_BASE_URL}/api/sessions/`,
+    {
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
-  if(existingSession[0]?.status === 'WORKING') {
-    return
+  if (existingSession[0]?.status === "WORKING") {
+    return;
   }
 
-  const url = "http://localhost:3000/api/sessions/start";
+  const url = `${process.env.WHATSAPP_BASE_URL}/api/sessions/start`;
 
   const requestData = {
     name: "default",

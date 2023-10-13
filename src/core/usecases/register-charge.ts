@@ -30,8 +30,6 @@ export class RegisterChargeUseCase {
       demand_day: req.demandDay,
     });
 
-    console.log('creating charge', charge)
-
     await this.chargeRepository.register(charge);
     
     return {

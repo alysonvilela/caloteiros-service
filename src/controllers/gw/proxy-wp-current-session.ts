@@ -1,5 +1,6 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import axios from "axios";
+import 'dotenv/config'
 
 interface Response {
   name: string;
@@ -22,14 +23,15 @@ interface Webhook {
 }
 
 const fetchCurrentSession = async () => {
-  const url = "http://localhost:3000/api/sessions";
-
+  const url = `${process.env.WHATSAPP_BASE_URL}/api/sessions`;
   const { data } = await axios.get<Response>(url, {
     headers: {
       accept: "application/json",
       "Content-Type": "application/json",
     },
   });
+
+  console.log(data)
 
   const { config, name, ...rest } = data?.[0]
 
