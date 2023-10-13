@@ -29,6 +29,18 @@ functions:
       - http:
           path: admin/register
           method: post
+  admin-auth-qr:
+    handler: src/controllers/gw/proxy-wp-auth-qr.handler
+    events: 
+      - http:
+          path: admin/qr
+          method: get
+  admin-current-session:
+    handler: src/controllers/gw/proxy-wp-current-session.handler
+    events: 
+      - http:
+          path: admin/session
+          method: get
   charge-register:
     handler: src/controllers/charge/register-charge.handler
     events: 
@@ -53,4 +65,3 @@ functions:
       - http:
           path: charge/list
           method: get
-          

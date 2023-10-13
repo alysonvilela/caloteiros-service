@@ -25,7 +25,8 @@ export class SendMessageToTeamsUseCase {
       const owner = await this.serviceOwnerRepository.queryById(charge.flatted.owner_id);
       if (chargeTeam) {
         const valueForEachMember =
-          charge.flatted.service.value / (chargeTeam.flatted.members.length + 1); // + 1 - Because owner counts
+          charge.flatted.service.value / chargeTeam.flatted.members.length
+
         const message = makeMessage({
           customMessage: charge.flatted.custom_message ?? null,
           serviceName: charge.flatted.service.name,

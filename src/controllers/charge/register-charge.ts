@@ -1,12 +1,11 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { inMemoryRepositories } from "../../core/repositories/inmemory-impl";
 import { RegisterChargeUseCase } from "../../core/usecases/register-charge";
 import { z } from "zod";
 import { BadRequest } from "src/core/errors/bad-request";
 import { ChargeRepositoryPg } from "src/core/repositories/pg-impl/charge-repository";
+import { headerSchema } from "src/utils/authorization";
 
 const bodySchema = z.object({
-  ownerId: z.string(),
   customMessage: z.string().optional(),
   demandDay: z.string(),
   serviceName: z.string(),
@@ -15,6 +14,14 @@ const bodySchema = z.object({
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   const json: unknown = JSON.parse(event.body);
+
+  const headerDto = headerSchema.safeParse(event.headers);
+  
+  console.log({event: event.headers})
+
+  if (!headerDto.success) {
+    return { statusCode: 400, body: JSON.stringify(new BadRequest()) };
+  }
 
   const dto = bodySchema.safeParse(json);
 
@@ -25,7 +32,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const usecase = new RegisterChargeUseCase(ChargeRepositoryPg.getInstance());
 
   const result = await usecase.execute({
-    ownerId: dto.data.ownerId,
+    ownerId: headerDto.data["x-owner-id"],
     customMessage: dto.data.customMessage,
     demandDay: dto.data.demandDay,
     serviceName: dto.data.serviceName,
