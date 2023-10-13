@@ -3,12 +3,13 @@ Esse foi um projeto simples para cobrar os caloteiros que nao pagam assinaturas 
 Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 
 ## Techs
-- **WAHA + Venom -** Automacao whatsapp, expoe endpoints para envio de mensagens, autenticacao e afins.
-- **Serverless/AWS Lambda -** Configuracao de cron jobs facilitada.
+- **WAHA + Venom -** Automação whatsapp, expõe endpoints para envio de mensagens, autenticação e afins.
+- **Serverless/AWS Lambda -** Configuração de cron jobs facilitada.
 - **PostgreSQL -** Banco.
 - **PNPM -** Gerenciador de pacotes.
-- **Axios -** Conexao com apis externas.
-- **Zod -** Validacao de entrada de dados.
+- **Axios -** Conexão com apis externas.
+- **Zod -** Validação de entrada de dados.
+- **Docker -** Composer e Image para criar ambiente.
 
 
 ## O que a parada faz?
