@@ -54,7 +54,7 @@ functions:
           path: charge/{chargeId}/add-team
           method: post
   charge-call:
-    handler: src/controllers/charge/send-message-to-team.handler
+    handler: src/controllers/cron/send-message-to-team.handler
     events: 
       - http:
           path: charge/{chargeId}/call
