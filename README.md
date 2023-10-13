@@ -37,3 +37,12 @@ Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 - /charge/{chargeId}/add-team - Um administrador adiciona um time a cobranca
 - /charge/{chargeId}/call - Dispara envio de mensagens para os caloteiros 
 - /charge/list - Lista todos agendamentos de cobranca
+
+## Como usar
+Você precisa de Docker e Node previamente instalado na sua máquina.
+- Clone o repositório
+- Mantenha o Docker Desktop aberto.
+- Instale as dependências utilizando o comando `pnpm install` ou `npm install`
+- Instale o framework serverless `npm install -g serverless`
+- Crie um arquivo `.env` baseado no arquivo `.env.example`
+- Rode o comando `pnpm dev` ou `npm run dev`
