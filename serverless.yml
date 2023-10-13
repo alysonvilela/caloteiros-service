@@ -30,13 +30,13 @@ functions:
           path: admin/register
           method: post
   admin-auth-qr:
-    handler: src/controllers/charge/proxy-auth-qr.handler
+    handler: src/controllers/gw/proxy-wp-auth-qr.handler
     events: 
       - http:
           path: admin/qr
           method: get
   admin-current-session:
-    handler: src/controllers/charge/proxy-current-session.handler
+    handler: src/controllers/gw/proxy-wp-current-session.handler
     events: 
       - http:
           path: admin/session

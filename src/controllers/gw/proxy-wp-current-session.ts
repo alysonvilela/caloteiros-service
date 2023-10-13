@@ -31,8 +31,6 @@ const fetchCurrentSession = async () => {
     },
   });
 
-console.log({data})
-
   const { config, name, ...rest } = data?.[0]
 
   return {
@@ -41,8 +39,6 @@ console.log({data})
 };
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  let base64String: string = "";
-
   const response = await fetchCurrentSession();
 
   return {
