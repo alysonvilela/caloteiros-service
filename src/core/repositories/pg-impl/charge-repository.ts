@@ -1,26 +1,21 @@
-import { sql } from "src/adapters/postgres";
+import { getConnection } from "src/adapters/postgres";
 import { Charge } from "../../domains/charge";
 import { ChargeRepository } from "../charge-repository";
 import { pgError } from "src/utils/pg-error";
 
 export class ChargeRepositoryPg implements ChargeRepository {
-  private static instance: ChargeRepositoryPg;
+  private sql = getConnection();
 
-  private constructor() {}
-
-  static getInstance(): ChargeRepositoryPg {
-    if (!ChargeRepositoryPg.instance) {
-      ChargeRepositoryPg.instance = new ChargeRepositoryPg();
-    }
-
-    return ChargeRepositoryPg.instance;
+  constructor() {
+    // No singleton pattern - better for serverless
   }
 
   async queryById(chargeId: string): Promise<Charge> {
     try {
-      const result = await sql`
-      SELECT * FROM charge WHERE id = ${chargeId}
-    `;
+      // Use LIMIT 1 for performance optimization
+      const result = await this.sql`
+        SELECT * FROM charge WHERE id = ${chargeId} LIMIT 1
+      `;
 
       if (!result.length) {
         return null;
@@ -64,11 +59,11 @@ export class ChargeRepositoryPg implements ChargeRepository {
 
   async queryAllChargeIdsByDemandDay(demandDay: string): Promise<string[]> {
     try {
-      const pgResult = await sql`
-      SELECT id FROM charge WHERE demand_day = '${demandDay}'
-    `;
+      const pgResult = await this.sql`
+        SELECT id FROM charge WHERE demand_day = ${demandDay}
+      `;
 
-      const result = pgResult.map((val) => `${val}`);
+      const result = pgResult.map((val) => `${val.id}`);
       return result;
     } catch (err) {
       console.error(pgError(this.queryAllChargeIdsByDemandDay.name), err);
@@ -78,15 +73,15 @@ export class ChargeRepositoryPg implements ChargeRepository {
 
   async queryAllByOwnerId(ownerId: string): Promise<Charge[]> {
     try {
-      const results =
-        await sql`SELECT * FROM charge WHERE owner_id = ${ownerId}`;
+      const results = await this.sql`
+        SELECT * FROM charge WHERE owner_id = ${ownerId}
+      `;
 
       const charges = results?.map(
         (pg) =>
           new Charge(
             {
               custom_message: pg.custom_message,
-
               demand_day: pg.demand_day,
               owner_id: pg.owner_id,
               service: {
@@ -121,13 +116,13 @@ export class ChargeRepositoryPg implements ChargeRepository {
     } = charge.flatted;
 
     try {
-      await sql`
-      INSERT INTO charge (id, owner_id, svs_name, svs_value_in_cents, demand_day, custom_message, created_at, updated_at, deleted_at)
-      VALUES (${id}, ${owner_id}, ${service.name}, ${service.value}, ${demand_day}, ${custom_message}, ${created_at}, ${updated_at}, ${deleted_at})
-    `;
+      await this.sql`
+        INSERT INTO charge (id, owner_id, svs_name, svs_value_in_cents, demand_day, custom_message, created_at, updated_at, deleted_at)
+        VALUES (${id}, ${owner_id}, ${service.name}, ${service.value}, ${demand_day}, ${custom_message}, ${created_at}, ${updated_at}, ${deleted_at})
+      `;
     } catch (err) {
       console.error(pgError(this.register.name), err);
-      return null;
+      throw err;
     }
   }
 }

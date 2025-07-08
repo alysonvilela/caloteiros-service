@@ -8,6 +8,24 @@ plugins:
 
 custom:
   useDotenv: true
+  esbuild:
+    bundle: true
+    minify: true
+    target: 'es2022'
+    sourcemap: false
+    exclude:
+      - 'aws-sdk'
+      - '@aws-sdk/*'
+    keepNames: false
+    external:
+      - 'aws-lambda'
+      - 'aws-sdk'
+    banner:
+      js: '/* Optimized bundle for AWS Lambda */'
+    metafile: false
+    packagerOptions:
+      scripts:
+        - rm -rf node_modules/aws-sdk
   serverless-offline:
     httpPort: 4000
   serverless-offline-watcher:
@@ -18,49 +36,70 @@ custom:
 provider:
   name: aws
   runtime: nodejs18.x
+  environment:
+    NODE_OPTIONS: '--enable-source-maps --max-old-space-size=512'
 
 package:
   individually: true
+  excludeDevDependencies: true
+  patterns:
+    - '!node_modules/aws-sdk/**'
+    - '!**/*.test.ts'
+    - '!**/*.spec.ts'
 
 functions:
   admin-register:
     handler: src/controllers/service-owner/register-service-owner.handler
+    memorySize: 256
+    timeout: 30
     events: 
       - http:
           path: admin/register
           method: post
   admin-auth-qr:
     handler: src/controllers/gw/proxy-wp-auth-qr.handler
+    memorySize: 256
+    timeout: 30
     events: 
       - http:
           path: admin/qr
           method: get
   admin-current-session:
     handler: src/controllers/gw/proxy-wp-current-session.handler
+    memorySize: 256
+    timeout: 30
     events: 
       - http:
           path: admin/session
           method: get
   charge-register:
     handler: src/controllers/charge/register-charge.handler
+    memorySize: 256
+    timeout: 30
     events: 
       - http:
           path: charge/register
           method: post
   charge-add-team:
     handler: src/controllers/charge/register-team-to-charge.handler
+    memorySize: 256
+    timeout: 30
     events: 
       - http:
           path: charge/{chargeId}/add-team
           method: post
   charge-call:
     handler: src/controllers/cron/send-message-to-team.handler
+    memorySize: 512
+    timeout: 45
     events: 
       - http:
           path: charge/{chargeId}/call
           method: post
   list-service-owner-charges:
     handler: src/controllers/charge/list-service-owner-charges.handler
+    memorySize: 256
+    timeout: 30
     events: 
       - http:
           path: charge/list
