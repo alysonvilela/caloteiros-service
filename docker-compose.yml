@@ -3,7 +3,7 @@ version: '3'
 services:
   whatsapp-http-api_waha:
     image: devlikeapro/whatsapp-http-api
-    container_name: whatsapp-http-api
+    container_name: whatsapp-http-api_waha
     ports:
       - "4040:3000/tcp"
     environment:
