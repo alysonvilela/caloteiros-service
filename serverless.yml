@@ -48,6 +48,14 @@ package:
     - '!**/*.spec.ts'
 
 functions:
+  health:
+    handler: src/controllers/health/healthcheck.handler
+    memorySize: 128
+    timeout: 10
+    events:
+      - http:
+          path: health
+          method: get
   admin-register:
     handler: src/controllers/service-owner/register-service-owner.handler
     memorySize: 256

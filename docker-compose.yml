@@ -12,3 +12,37 @@ services:
       - WHATSAPP_HOOK_EVENTS=message
       - WHATSAPP_DEFAULT_ENGINE=WEBJS
     restart: always
+    networks:
+      - caloteiros-network
+
+  serverless-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: caloteiros-serverless
+    ports:
+      - "4000:4000"
+    environment:
+      # Database connection
+      - PGHOST=${PGHOST}
+      - PGDATABASE=${PGDATABASE}
+      - PGUSER=${PGUSER}
+      - PGPASSWORD=${PGPASSWORD}
+      - ENDPOINT_ID=${ENDPOINT_ID}
+      # WhatsApp API configuration
+      - WHATSAPP_BASE_URL=http://whatsapp-http-api:3000
+      # AWS Lambda environment
+      - AWS_LAMBDA_FUNCTION_NAME=local
+      - NODE_ENV=development
+    depends_on:
+      - whatsapp-http-api
+    volumes:
+      - ./src:/var/task/src
+      - ./serverless.yml:/var/task/serverless.yml
+    restart: unless-stopped
+    networks:
+      - caloteiros-network
+
+networks:
+  caloteiros-network:
+    driver: bridge

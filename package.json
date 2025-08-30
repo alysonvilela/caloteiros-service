@@ -1,6 +1,10 @@
 {
   "scripts": {
-    "dev": "docker-compose up -d && serverless offline start"
+    "dev": "docker-compose up -d && serverless offline start",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build",
+    "docker:logs": "docker-compose logs -f"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.122",
