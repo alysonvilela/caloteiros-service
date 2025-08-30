@@ -9,7 +9,7 @@ Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 - **PNPM -** Gerenciador de pacotes.
 - **Axios -** Conexão com apis externas.
 - **Zod -** Validação de entrada de dados.
-- **Docker -** Composer e Image para criar ambiente.
+- **Docker -** Composer e Image para criar ambiente completo com WhatsApp API e Serverless.
 
 
 ## O que a parada faz?
@@ -39,6 +39,27 @@ Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 - /charge/list - Lista todos agendamentos de cobranca
 
 ## Como usar
+
+### Opção 1: Docker Compose (Recomendado)
+Você precisa apenas do Docker instalado na sua máquina.
+- Clone o repositório
+- (Opcional) Crie um arquivo `.env` baseado no arquivo `.env.example` - valores padrão são fornecidos
+- Execute o comando `docker-compose up -d` para iniciar todos os serviços
+- Aguarde todos os serviços iniciarem (pode levar alguns segundos)
+- A API Serverless estará disponível em `http://localhost:4000`
+- O WhatsApp HTTP API estará disponível em `http://localhost:4040`
+- PostgreSQL estará disponível em `localhost:5432` (usuário: caloteiros, senha: caloteiros123)
+
+#### Verificar se tudo está funcionando:
+- Acesse `http://localhost:4000/health` para verificar o status da API e conexão com banco de dados
+
+#### Comandos úteis do Docker:
+- `npm run docker:up` - Inicia todos os containers
+- `npm run docker:down` - Para todos os containers
+- `npm run docker:build` - Reconstrói as imagens
+- `npm run docker:logs` - Visualiza os logs dos containers
+
+### Opção 2: Desenvolvimento Local
 Você precisa de Docker e Node previamente instalado na sua máquina.
 - Clone o repositório
 - Mantenha o Docker Desktop aberto.

@@ -1,6 +1,28 @@
 version: '3'
 
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: caloteiros-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${PGUSER:-caloteiros}
+      - POSTGRES_PASSWORD=${PGPASSWORD:-caloteiros123}
+      - POSTGRES_DB=${PGDATABASE:-caloteiros_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./create_tables.sql:/docker-entrypoint-initdb.d/01-create_tables.sql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/02-init-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PGUSER:-caloteiros}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - caloteiros-network
+
   whatsapp-http-api_waha:
     image: devlikeapro/whatsapp-http-api
     container_name: whatsapp-http-api_waha
@@ -12,4 +34,43 @@ services:
       - WHATSAPP_HOOK_EVENTS=message
       - WHATSAPP_DEFAULT_ENGINE=WEBJS
     restart: always
+    networks:
+      - caloteiros-network
 
+  serverless-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: caloteiros-serverless
+    ports:
+      - "4000:4000"
+    environment:
+      # Database connection
+      - PGHOST=postgres
+      - PGDATABASE=${PGDATABASE:-caloteiros_db}
+      - PGUSER=${PGUSER:-caloteiros}
+      - PGPASSWORD=${PGPASSWORD:-caloteiros123}
+      - ENDPOINT_ID=${ENDPOINT_ID:-local}
+      # WhatsApp API configuration
+      - WHATSAPP_BASE_URL=http://whatsapp-http-api:3000
+      # AWS Lambda environment
+      - AWS_LAMBDA_FUNCTION_NAME=local
+      - NODE_ENV=development
+    depends_on:
+      postgres:
+        condition: service_healthy
+      whatsapp-http-api:
+        condition: service_started
+    volumes:
+      - ./src:/var/task/src
+      - ./serverless.yml:/var/task/serverless.yml
+    restart: unless-stopped
+    networks:
+      - caloteiros-network
+
+networks:
+  caloteiros-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

@@ -1,0 +1,18 @@
+# Development override file for docker-compose
+# This file is automatically loaded by docker-compose and overrides settings in docker-compose.yml
+# Copy .env.example to .env and fill in your values
+
+version: '3'
+
+services:
+  serverless-api:
+    # For development, we can use host networking to simplify local testing
+    # Remove this in production
+    command: ["npx", "serverless", "offline", "start", "--host", "0.0.0.0", "--httpPort", "4000"]
+    
+    # Additional development environment variables
+    environment:
+      - AWS_ACCESS_KEY_ID=local
+      - AWS_SECRET_ACCESS_KEY=local
+      - AWS_REGION=us-east-1
+      - IS_OFFLINE=true
