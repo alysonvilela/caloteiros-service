@@ -1,9 +1,9 @@
-version: '3'
+
 
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: caloteiros-postgres
+    container_name: caloteiros-service-postgres
     ports:
       - "5432:5432"
     environment:
@@ -25,7 +25,7 @@ services:
 
   whatsapp-http-api_waha:
     image: devlikeapro/whatsapp-http-api
-    container_name: whatsapp-http-api_waha
+    container_name: caloteiros-service-whatsapp
     ports:
       - "7710:3000/tcp"
     environment:
@@ -41,7 +41,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: caloteiros-serverless
+    container_name: caloteiros-service-api
     ports:
       - "4000:4000"
     environment:
@@ -52,7 +52,7 @@ services:
       - PGPASSWORD=${PGPASSWORD:-caloteiros123}
       - ENDPOINT_ID=${ENDPOINT_ID:-local}
       # WhatsApp API configuration
-      - WHATSAPP_BASE_URL=http://whatsapp-http-api:3000
+      - WHATSAPP_BASE_URL=http://whatsapp-http-api_waha:3000
       # AWS Lambda environment
       - AWS_LAMBDA_FUNCTION_NAME=local
       - NODE_ENV=development
