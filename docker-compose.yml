@@ -59,7 +59,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-      whatsapp-http-api:
+      whatsapp-http-api_waha:
         condition: service_started
     volumes:
       - ./src:/var/task/src
