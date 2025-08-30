@@ -39,6 +39,9 @@ importers:
       esbuild:
         specifier: ^0.14.25
         version: 0.14.54
+      serverless:
+        specifier: ^3.40.0
+        version: 3.40.0
       serverless-esbuild:
         specifier: ^1.25.0
         version: 1.55.1(esbuild@0.14.54)
@@ -4804,7 +4807,7 @@ snapshots:
   buffer@4.9.2:
     dependencies:
       base64-js: 1.5.1
-      ieee754: 1.1.13
+      ieee754: 1.2.1
       isarray: 1.0.0
 
   buffer@5.7.1:
