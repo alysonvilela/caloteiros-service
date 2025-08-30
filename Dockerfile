@@ -13,6 +13,9 @@ COPY package.json pnpm-lock.yaml ./
 # Install pnpm
 RUN npm install -g pnpm
 
+# Install serverless framework globally
+RUN npm install -g serverless
+
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
@@ -20,9 +23,13 @@ RUN pnpm install --frozen-lockfile
 COPY tsconfig.json ./
 COPY src ./src
 COPY serverless.yml ./
+COPY start.sh ./
+
+# Make start script executable
+RUN chmod +x start.sh
 
 # Expose the serverless offline port
 EXPOSE 4000
 
-# Set the entrypoint for local development
-ENTRYPOINT ["npx", "serverless", "offline", "start", "--host", "0.0.0.0"]
+# Set the entrypoint to use the start script
+ENTRYPOINT ["./start.sh"]
