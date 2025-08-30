@@ -5,7 +5,7 @@ services:
     image: devlikeapro/whatsapp-http-api
     container_name: whatsapp-http-api_waha
     ports:
-      - "4040:3000/tcp"
+      - "7710:3000/tcp"
     environment:
       # Environment variables from https://waha.devlike.pro/docs/how-to/config/
       - WHATSAPP_HOOK_URL=https://httpbin.org/post
