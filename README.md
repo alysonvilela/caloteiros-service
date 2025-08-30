@@ -43,10 +43,15 @@ Usei para aprimorar tecnicas de DDD, SQL e Clean Architecture.
 ### Opção 1: Docker Compose (Recomendado)
 Você precisa apenas do Docker instalado na sua máquina.
 - Clone o repositório
-- Crie um arquivo `.env` baseado no arquivo `.env.example`
+- (Opcional) Crie um arquivo `.env` baseado no arquivo `.env.example` - valores padrão são fornecidos
 - Execute o comando `docker-compose up -d` para iniciar todos os serviços
+- Aguarde todos os serviços iniciarem (pode levar alguns segundos)
 - A API Serverless estará disponível em `http://localhost:4000`
 - O WhatsApp HTTP API estará disponível em `http://localhost:4040`
+- PostgreSQL estará disponível em `localhost:5432` (usuário: caloteiros, senha: caloteiros123)
+
+#### Verificar se tudo está funcionando:
+- Acesse `http://localhost:4000/health` para verificar o status da API e conexão com banco de dados
 
 #### Comandos úteis do Docker:
 - `npm run docker:up` - Inicia todos os containers

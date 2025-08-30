@@ -1,8 +1,11 @@
-# Use the official AWS Lambda Node.js base image
-FROM public.ecr.aws/lambda/nodejs:18
+# Use Node.js Alpine for smaller image size
+FROM node:18-alpine
+
+# Install required dependencies for native modules
+RUN apk add --no-cache python3 make g++ 
 
 # Set working directory
-WORKDIR ${LAMBDA_TASK_ROOT}
+WORKDIR /app
 
 # Copy package files
 COPY package.json pnpm-lock.yaml ./
@@ -11,18 +14,12 @@ COPY package.json pnpm-lock.yaml ./
 RUN npm install -g pnpm
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile --prod
+RUN pnpm install --frozen-lockfile
 
 # Copy source code
 COPY tsconfig.json ./
 COPY src ./src
 COPY serverless.yml ./
-
-# Install serverless and plugins for local development
-RUN pnpm add -D serverless@3 serverless-esbuild serverless-offline serverless-offline-watcher typescript
-
-# Note: esbuild will handle TypeScript compilation at runtime
-# No need to pre-compile as serverless-esbuild handles this
 
 # Expose the serverless offline port
 EXPOSE 4000
