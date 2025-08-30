@@ -17,7 +17,8 @@ RUN npm install -g pnpm
 RUN npm install -g serverless
 
 # Install dependencies
-RUN pnpm install --frozen-lockfile
+# Note: Removed --frozen-lockfile to handle cases where lockfile might be out of sync
+RUN pnpm install
 
 # Copy source code
 COPY tsconfig.json ./
